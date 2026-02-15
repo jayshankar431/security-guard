@@ -1,59 +1,57 @@
 package com.example.securityguard
 
-// State Management for Fake Call Service
-enum class CallState {
-    RINGING,
-    ACTIVE,
-    DISCONNECTED
-}
+import android.telecom.Connection
+import android.telecom.ConnectionService
+import android.telecom.TelecomManager
 
-class FakeCallService {
-    private var state: CallState = CallState.DISCONNECTED
-    private var callTimer: Timer? = null
+class FakeCallService : ConnectionService() {
 
-    fun initiateCall() {
-        if (state == CallState.DISCONNECTED) {
-            state = CallState.RINGING
-            println("Call is ringing...")
-            startMissedCallTimer()
+    override fun onCreateOutgoingConnection(initiator: Connection.Request): Connection? {
+        val connection = FakeConnection()
+        // Logic for creating an outgoing connection
+        return connection
+    }
+
+    override fun onCreateIncomingConnection(initiator: Connection.Request): Connection? {
+        val connection = FakeConnection()
+        // Logic for creating an incoming connection
+        return connection
+    }
+
+    inner class FakeConnection : Connection() {
+        init {
+            // Set up connection properties and handlers
+            setAddress(/* Set address */)
+            // Handle call events
         }
-    }
 
-    fun acceptCall() {
-        if (state == CallState.RINGING) {
-            state = CallState.ACTIVE
-            println("Call is now active...")
-            startActiveCallTimer()
-            callTimer?.cancel() // Cancel missed call timer
+        override fun onAnswer() {
+            // Logic for answering the call
         }
-    }
 
-    fun disconnectCall() {
-        state = CallState.DISCONNECTED
-        println("Call has been disconnected.")
-        callTimer?.cancel()
-    }
+        override fun onReject() {
+            // Logic for rejecting the call
+        }
 
-    private fun startMissedCallTimer() {
-        callTimer = Timer().apply {
-            schedule(object : TimerTask() {
+        override fun onDisconnect() {
+            // Logic for disconnecting the call
+        }
+
+        private val disconnectTimer = Timer()
+        init {
+            // Auto-disconnect after 30 seconds for missed calls
+            disconnectTimer.schedule(object : TimerTask() {
                 override fun run() {
-                    if (state == CallState.RINGING) {
-                        println("Missed call.")
-                        disconnectCall()
+                    // Disconnect logic
+                    if (/* Conditions for missed call */) {
+                        disconnect()
                     }
                 }
-            }, 30000) // 30 seconds
+            }, 30_000)
         }
-    }
 
-    private fun startActiveCallTimer() {
-        callTimer = Timer().apply {
-            schedule(object : TimerTask() {
-                override fun run() {
-                    disconnectCall()
-                }
-            }, 60000) // Example: disconnect after 1 minute
+        fun startActiveCallTimer() {
+            // Logic to start a timer for active calls
         }
     }
-}
+} 
