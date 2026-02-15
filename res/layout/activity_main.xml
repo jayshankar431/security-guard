@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/callerInfoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Caller Info"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true" />
+
+    <EditText
+        android:id="@+id/callerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Caller Name"
+        android:layout_below="@id/callerInfoLabel" />
+
+    <EditText
+        android:id="@+id/callerNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Caller Number"
+        android:layout_below="@id/callerName" />
+
+    <Button
+        android:id="@+id/contactPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Contact"
+        android:layout_below="@id/callerNumber" />
+
+    <Button
+        android:id="@+id/photoPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Photo"
+        android:layout_below="@id/contactPicker" />
+
+    <TextView
+        android:id="@+id/scheduleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Schedule"
+        android:textSize="18sp"
+        android:layout_below="@id/photoPicker" />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scheduleLabel" />
+
+    <Button
+        android:id="@+id/callButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call"
+        android:layout_below="@id/timePicker"
+        android:layout_marginTop="16dp" />
+
+</RelativeLayout>
